@@ -1,14 +1,29 @@
 {
-	"name"		: "photoShare",
-	"version"	: "0.0.0",
-	"description"	: "A photo sharing service.",
-	"main"		: "app.js",
-	"author"	: "Glenn Forbes",
-	"dependencies"	: {
-		"body-parser"		: "^.1.4.3",
-		"express"		: "^4.13.4",
-		"method-override"	: "^2.1.3",
-		"mongoose"		: "^4.4.12",
-		"morgan"		: "^1.1.1"
-	}
+  "name": "photoShare",
+  "version": "0.0.0",
+  "description": "A photo sharing service.",
+  "main": "server.js",
+  "author": "Glenn Forbes",
+  "dependencies": {
+    "body-parser": "^1.15.1",
+    "express": "^4.13.4",
+    "method-override": "^2.1.3",
+    "mongoose": "^4.4.12",
+    "morgan": "^1.1.1"
+  },
+  "scripts": {
+    "start": "node server.js"
+  },
+  "directories": {
+    "test": "tests"
+  },
+  "devDependencies": {},
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/Gizmoloon/photoShare.git"
+  },
+  "license": "BSD-2-Clause",
+  "bugs": {
+    "url": "https://github.com/Gizmoloon/photoShare/issues"
+  }
 }
