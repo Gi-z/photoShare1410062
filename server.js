@@ -3,10 +3,14 @@
 //imports
 
 var express = require('express');
-var app = express();
+app = express();
 var bodyParser = require('body-parser');
 var methodOverride = require('method-override');
 var mongoose = require('mongoose');
+var passport = require('passport');
+var session = require('express-session');
+var morgan = require('morgan');
+require('dotenv').config();
 
 //config files
 var db = require('./app/config/database');
@@ -15,18 +19,29 @@ var db = require('./app/config/database');
 mongoose.connect(db.url);
 
 //app setup
+app.set('views', __dirname + '/public/views');
+app.set('view engine', 'pug');
 
+app.use(morgan('dev'));
 app.use(bodyParser.json());
 app.use(bodyParser.json({ type: 'application/vnd.api+json' }));
 app.use(bodyParser.urlencoded({ extended: true }));
-app.use(express.static(__dirname + '/public'));
+app.use(session({ secret: process.env.SESSION_SECRET }));
+//app.use(express.static(__dirname + '/public'));
+app.use(passport.initialize());
+app.use(passport.session());
 
 //routes
-require('./app/config/routes')(app);
+require('./app/config/routes.js');
+var passportInit = require('./app/passport/init.js');
+passportInit(passport);
+
+//Set up test user if required.
+//require('./makeTest.js');
 
 //start app on port 8080
 app.listen(8080);
 
 console.log("Listening on port 8080.");
 
-exports = module.exports = app;
+module.exports = app;

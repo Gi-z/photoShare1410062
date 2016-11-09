@@ -1,0 +1,18 @@
+html
+	head
+		title= title
+		script(src='http://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/js/bootstrap.min.js')
+		script(src='//ajax.googleapis.com/ajax/libs/angularjs/1.2.6/angular.min.js')
+	body
+		h1= message
+	
+		form(action="/login", name="login_form", method="POST")
+			div.input
+				span.label Username
+				input(type="text", name="username")
+			
+				span.label Password
+				input(type="password", name="password")
+
+			div.actions
+				input(type="submit", name="login")
