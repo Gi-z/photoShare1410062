@@ -20,21 +20,44 @@ html
 	nav(class="navbar navbar-default")
 		div(class="container-fluid")
 			ul(class="nav navbar-nav")
-				li(class="active") 
+				li 
 					a(href="/home") home
 				li 
 					a(href="/profile") profile
 				li 
 					a(href="/discover") discover
-				li
-					a(href="/upload") upload
-				li 
-					a(href="/login") login	
+				li(class="active")
+					a(href="/upload") upload	
 
 	div(id="test")
 	
-		
-			
+		form(action="", id="upload_form", enctype='multipart/form-data')
+			span.label Title 
+				input(type="text", name="title")
 
+			span.label Image
+				input(type="file", id="file", accept="image/*")
 
-		
+			input(type="submit", id="upload", text="Upload")
+
+		script.
+			$("#upload_form").submit(function (e) {
+				e.preventDefault();
+
+				var input = document.querySelector("input[type=file]");
+				var file = input.files[0];
+
+				var formData = new FormData();
+				formData.append("file", file);
+				
+				$.ajax({
+					type: "POST",
+					contentType: false,
+					processData: false,
+					url: "/api/upload_image",
+					data: formData,
+					success: function(data) {
+						console.log(data);
+					}
+				});
+			});

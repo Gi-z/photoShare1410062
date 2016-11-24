@@ -27,9 +27,7 @@ html
 				li 
 					a(href="/discover") discover
 				li
-					a(href="/upload") upload
-				li 
-					a(href="/login") login	
+					a(href="/upload") upload	
 
 	div(id="test")
 	
@@ -37,4 +35,13 @@ html
 			
 
 
-		
+		form(action="/login", name="login_form", method="POST")
+			div.input
+				span.label Username
+				input(type="text", name="username")
+			
+				span.label Password
+				input(type="password", name="password")
+
+			div.actions
+				input(type="submit", name="login")
