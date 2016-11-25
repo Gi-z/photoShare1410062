@@ -11,7 +11,19 @@ module.exports = function(passport) {
 	function(req, username, password, done) {
 	
 		findOrCreateUser = function() {
-		
+	
+			User.findOne({ "email": req.param("email")}, function(err, user) {
+				if (err) {
+					console.log("Error in validation: " + err);
+					return done(err);
+				}
+				
+				if (user) {
+					console.log("User with email address already exists!");
+					return done(null, false);
+				}
+			});
+				
 			User.findOne({ 'username': username}, function(err, user) {
 				if (err) {
 					console.log('Error in Register: '+err);
@@ -20,7 +32,7 @@ module.exports = function(passport) {
 
 				if (user) {
 					console.log('Username has been taken: '+username);
-					return done(null, false, req.flash('message', 'User already exists!'));
+					return done(null, false);
 				}
 				else {
 					var newUser = new User();

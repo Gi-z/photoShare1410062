@@ -35,25 +35,40 @@ html
 			
 
 
-		form(action="/register", name="register_form", method="POST")
-			div.input
-				span.label Name
+		form(action="", id="register_form", enctype='multipart/form-data')
+			span.label Name
 				input(type="text", name="name")
 
-				span.label Username
+			span.label Username
 				input(type="text", name="username")
-				
-				span.label Password
+			
+			span.label Password
 				input(type="password", name="password")
 
-				span.label Re-enter Password
+			span.label Re-enter Password
 				input(type="password", name="passwordconf")
 
-				span.label Email
+			span.label Email
 				input(type="email", name="email")
 
-				span.label Re-enter Email
+			span.label Re-enter Email
 				input(type="email", name="emailconf")
 
-			div.actions
-				input(type="submit", name="register")
+			input(type="submit", id="register", text="Register")
+
+		script.
+			$("#register_form").submit(function (e) {
+				e.preventDefault();
+
+				var formData = $("#register_form").serialize();
+				console.log(formData);				
+
+				$.ajax({
+					type: "POST",
+					url: "/api/register",
+					data: formData,
+					success: function(data) {
+						console.log(data);
+					}
+				});
+			});

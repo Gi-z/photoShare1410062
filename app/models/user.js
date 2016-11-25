@@ -11,6 +11,7 @@ var userSchema = new Schema({
 	salt: String,
 	admin: Boolean,
 	email: String,
+	profile_pic: String,
 	profile: {
 		age: Number,
 		bio: String,
