@@ -10,6 +10,7 @@ var mongoose = require('mongoose');
 var passport = require('passport');
 var session = require('express-session');
 var morgan = require('morgan');
+var path = require("path");
 require('dotenv').config();
 
 //config files
@@ -27,7 +28,9 @@ app.use(bodyParser.json());
 app.use(bodyParser.json({ type: 'application/vnd.api+json' }));
 app.use(bodyParser.urlencoded({ extended: true }));
 app.use(session({ secret: process.env.SESSION_SECRET }));
-//app.use(express.static(__dirname + '/public'));
+app.use(express.static(path.join(__dirname, 'public')));
+app.use('/bower_components',  express.static(__dirname + '/bower_components'));
+app.use('/node_modules', express.static(__dirname + '/node_modules'));
 app.use(passport.initialize());
 app.use(passport.session());
 
