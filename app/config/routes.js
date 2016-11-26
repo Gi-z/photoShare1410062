@@ -93,6 +93,18 @@ router.post('/api/register', passport.authenticate('register'), function(req, re
 		});		
 });
 
+router.post('/api/login', passport.authenticate('loggy'), function(req, res) {
+	if (res.user)
+		res.json({
+			"success": "true",
+			"msg": "Logged in successfully."
+		});
+	else
+		res.json({
+			"success": "false",
+			"msg": "Login failed."
+		});
+});
 
 var uploading = multer({ storage: multer.memoryStorage() });
 var type = uploading.single("file");

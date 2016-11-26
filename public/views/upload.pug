@@ -13,7 +13,7 @@ html
 		link(rel="stylesheet", href="../css/base.css")
 		script(src='//ajax.googleapis.com/ajax/libs/angularjs/1.2.6/angular.min.js')
 		script(src="http://cdnjs.cloudflare.com/ajax/libs/angular-ui-router/0.2.10/angular-ui-router.js")
-		script(src="../js/angular/app.js")
+		script(src="../js/controllers/uploadFormController.js")
 		
 	body
 
@@ -29,35 +29,15 @@ html
 				li(class="active")
 					a(href="/upload") upload	
 
-	div(id="test")
+	div(id="test", ng-app="uploadApp", ng-controller="formController")
 	
-		form(action="", id="upload_form", enctype='multipart/form-data')
+		form(id="upload_form")
 			span.label Title 
 				input(type="text", name="title")
 
 			span.label Image
 				input(type="file", id="file", accept="image/*")
 
-			input(type="submit", id="upload", text="Upload")
+			input(type="submit", id="upload", text="Upload", ng-click="submitForm()")
 
-		script.
-			$("#upload_form").submit(function (e) {
-				e.preventDefault();
-
-				var input = document.querySelector("input[type=file]");
-				var file = input.files[0];
-
-				var formData = new FormData();
-				formData.append("file", file);
-				
-				$.ajax({
-					type: "POST",
-					contentType: false,
-					processData: false,
-					url: "/api/upload_image",
-					data: formData,
-					success: function(data) {
-						console.log(data);
-					}
-				});
-			});
+	

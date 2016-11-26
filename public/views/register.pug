@@ -13,7 +13,7 @@ html
 		link(rel="stylesheet", href="../css/base.css")
 		script(src='//ajax.googleapis.com/ajax/libs/angularjs/1.2.6/angular.min.js')
 		script(src="http://cdnjs.cloudflare.com/ajax/libs/angular-ui-router/0.2.10/angular-ui-router.js")
-		script(src="../js/angular/app.js")
+		script(src="../js/controllers/registerFormController.js")
 		
 	body
 
@@ -29,13 +29,9 @@ html
 				li
 					a(href="/upload") upload	
 
-	div(id="test")
-	
-		
-			
+	div(id="test" ng-app="registerApp", ng-controller="formController")
 
-
-		form(action="", id="register_form", enctype='multipart/form-data')
+		form(id="register_form")
 			span.label Name
 				input(type="text", name="name")
 
@@ -56,19 +52,4 @@ html
 
 			input(type="submit", id="register", text="Register")
 
-		script.
-			$("#register_form").submit(function (e) {
-				e.preventDefault();
-
-				var formData = $("#register_form").serialize();
-				console.log(formData);				
-
-				$.ajax({
-					type: "POST",
-					url: "/api/register",
-					data: formData,
-					success: function(data) {
-						console.log(data);
-					}
-				});
-			});
+	

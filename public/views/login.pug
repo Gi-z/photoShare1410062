@@ -13,8 +13,10 @@ html
 		link(rel="stylesheet", href="../css/base.css")
 		script(src='//ajax.googleapis.com/ajax/libs/angularjs/1.2.6/angular.min.js')
 		script(src="http://cdnjs.cloudflare.com/ajax/libs/angular-ui-router/0.2.10/angular-ui-router.js")
+	
 		script(src="../js/angular/app.js")
-		
+		script(src="../js/services/loginService.js")
+		script(src="../js/controllers/loginFormController.js")
 	body
 
 	nav(class="navbar navbar-default")
@@ -29,13 +31,9 @@ html
 				li
 					a(href="/upload") upload	
 
-	div(id="test")
-	
-		
-			
+	div(id="test", ng-app="loginApp", ng-controller="formController")
 
-
-		form(action="/login", name="login_form", method="POST")
+		form(id="login_form")
 			div.input
 				span.label Username
 				input(type="text", name="username")
@@ -44,4 +42,4 @@ html
 				input(type="password", name="password")
 
 			div.actions
-				input(type="submit", name="login")
+				input(type="submit", name="login", ng-click="submitForm()")

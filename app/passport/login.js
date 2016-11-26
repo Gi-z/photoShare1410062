@@ -9,6 +9,8 @@ module.exports = function(passport) {
 		passReqToCallback: true
 	},
 	function(req, username, password, done) {
+		console.log(req);
+		console.log(username + " " + password);
 		User.findOne({ 'username': username },
 			function(err, user) {
 		
@@ -24,7 +26,8 @@ module.exports = function(passport) {
 					console.log('Invalid password!');
 					return done(null, false);
 				}
-
+				
+				console.log("Successful login.");
 				return done(null, user);
 			}
 		);
