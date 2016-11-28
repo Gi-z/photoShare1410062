@@ -1,21 +1,11 @@
 var app = angular.module("uploadApp");
 
-function formController($scope) {
+app.controller("formController", ["$scope", "uploadService", function ($scope, uploadService) {
 	$scope.submitForm = function() {
-			
-		var formData = new FormData($("#upload_form"));
-		console.log(formData);
-
-		$.ajax({
-			type: "POST",
-			url: "/api/upload_image",
-			contentType: false,
-			processData: false,
-			data: formData,
-			success: function(data) {
-				console.log(data);
-			}
-		});
+		var formData = new FormData($("#upload_form")[0]);
+		
+		uploadService.upload(formData);
 	};
-}
+}]);
+
 

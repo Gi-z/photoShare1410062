@@ -1,19 +1,10 @@
-var app = angular.module("registerApp", []);
+var app = angular.module("registerApp");
 
-function formController($scope) {
+app.controller("formController", ["$scope", "registerService", function ($scope, registerService) {
 	$scope.submitForm = function() {
-			
 		var formData = $("#register_form").serialize();
-		console.log(formData);                          
-
-		$.ajax({
-			type: "POST",
-			url: "/api/register",
-			data: formData,
-			success: function(data) {
-				console.log(data);
-			}
-		});
+		registerService.register(formData);
 	};
-}
+}]);
+
 

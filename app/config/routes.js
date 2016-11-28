@@ -1,12 +1,8 @@
 const passport = require('passport');
 var express = require('express');
 var router = express.Router();
-var fs = require('fs');
-var multer = require("multer");
-var aws = require("aws-sdk");
-const fileType = require('file-type');
-
-var User = require('../models/user.js');
+const multer = require("multer");
+const apiController = require("../controllers/apiController.js");
 
 router.use("/*", function(req, res, next) {
 	console.log(req.params);
@@ -29,18 +25,7 @@ router.get('/login', function(req, res) {
 	res.render('login');
 });
 
-router.post('/login', passport.authenticate('loggy', {
-	successRedirect: '/home',
-	failureRedirect: '/login',
-}), function(req, res) {
-	console.log("this was run");
-});
-
-router.get('/register', isLoggedIn, function(req, res) {
-	res.render("register");
-});
-
-router.get("/upload", isLoggedIn, function(req, res) {
+router.get("/upload", function(req, res) {
 	res.render('upload');
 });	
 
@@ -81,77 +66,11 @@ router.get("/api/profile/:username", function(req, res) {
 	return user;
 });
 
-router.post('/api/register', passport.authenticate('register'), function(req, res, done) {
-	if (res.user)	
-		res.json({
-			"success": "true",
-			"msg": "User " + req.param("username") + " successfully created."
-		});
-	else
-		res.json({
-			"success": "false",
-		});		
-});
+router.post('/api/register', passport.authenticate('register'), apiController.register);
 
-router.post('/api/login', passport.authenticate('loggy'), function(req, res) {
-	if (res.user)
-		res.json({
-			"success": "true",
-			"msg": "Logged in successfully."
-		});
-	else
-		res.json({
-			"success": "false",
-			"msg": "Login failed."
-		});
-});
+router.post('/api/login', passport.authenticate('loggy'), apiController.login);
 
-var uploading = multer({ storage: multer.memoryStorage() });
-var type = uploading.single("file");
+var uploading = multer({ storage: multer.memoryStorage() });                                                                                                                         var type = uploading.single("file");
+router.post("/api/upload_image", type, apiController.upload);
 
-router.post("/api/upload_image", type, function(req, res) {
-	console.log(req);
-	var buf = req.file.buffer;
-	
-	console.log(fileType(buf));	
-	if (fileType(buf).mime.indexOf("image") == -1) {
-		res.json({
-			"success": "false",
-			"msg": "An image file was not uploaded."
-		});
-	}
-	else {	
-		var s3 = new aws.S3();
-		s3.createBucket({Bucket: "photoshare1410062"}, function () {
-			s3.putObject({
-				Bucket: "photoshare1410062",
-				Key: req.file.originalname,
-				Body: buf 
-			}, function(err, data) {
-				if (err)
-					console.log(err);
-				else
-					res.json({
-						"success": "true",
-						"msg": "The file " + req.file.originalname + " was successfully uploaded."
-					});
-			});
-		});
-	}
-
-});
-
-function isLoggedIn(req, res, next) {
-	if (req.isAuthenticated()) {
-		return next();
-	}	
-	
-	res.redirect('/');
-}
-
-function isLoggedInLogin(req, res, next) {
-	if (req.isAuthenticated()) {
-		res.redirect('/');
-	}
-}
 app.use('/', router);

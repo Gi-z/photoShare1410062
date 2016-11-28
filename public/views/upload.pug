@@ -6,13 +6,16 @@ html
 
 		link(rel="stylesheet", href="bower_components/bootstrap/dist/css/bootstrap.min.css")
 		link(rel="stylesheet", href="bower_components/jquery-ui/themes/smoothness/jquery-ui.min.css")
-		script(src="bower_components/jquery/jquery.min.js")
+		script(src="bower_components/jquery/dist/jquery.min.js")
 		script(src="bower_components/jquery-ui/jquery-ui.min.js")
 		script(src="bower_components/bootstrap/dist/js/bootstrap.min.js")
 
 		link(rel="stylesheet", href="../css/base.css")
 		script(src='//ajax.googleapis.com/ajax/libs/angularjs/1.2.6/angular.min.js')
 		script(src="http://cdnjs.cloudflare.com/ajax/libs/angular-ui-router/0.2.10/angular-ui-router.js")
+
+		script(src="../js/angular/app.js")
+		script(src="../js/services/uploadService.js")
 		script(src="../js/controllers/uploadFormController.js")
 		
 	body
@@ -31,12 +34,12 @@ html
 
 	div(id="test", ng-app="uploadApp", ng-controller="formController")
 	
-		form(id="upload_form")
+		form(id="upload_form", enctype="multipart/form-data")
 			span.label Title 
-				input(type="text", name="title")
+				input(type="text", id="title")
 
 			span.label Image
-				input(type="file", id="file", accept="image/*")
+				input(type="file", name="file", id="file", accept="image/*")
 
 			input(type="submit", id="upload", text="Upload", ng-click="submitForm()")
 

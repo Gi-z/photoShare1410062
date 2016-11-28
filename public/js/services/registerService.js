@@ -1,26 +1,30 @@
-var registerApp = angular.module("registerApp");
+var loginApp = angular.module("registerApp");
 
-registerApp.factory("registerService", function($data, $scope) {
-	var registerResponse = null;
-	$.ajax({
-                        type: "POST",
-                        url: "/api/register",
-                        contentType: false,
-                        processData: false,
-                        data: formData,
-                        success: function(data) {
-                               	registerResponse = data;
-                        }
-        });
+loginApp.factory("registerService", function() {
+	return {
+		register: function(formData) {
+			var registerResponse = null;
+			$.ajax({
+				type: "POST",
+                        	url: "/api/register",
+                        	data: formData,
+                        	success: function(data) {
+			 	      	registerResponse = data;
+                        	}
+			});
 
-	if (registerResponse) {
-		return registerResponse;
+			if (registerResponse) {
+				return registerResponse;
+			}
+			else {
+				registerResponse = {
+					"success": "false",
+					"msg": "Failed login request before reaching server."
+				};
+				return registerResponse;
+			}
+		}
 	}
-	else {
-		registerResponse = {
-			"success": "false",
-			"msg": "Failed register request before reaching server."
-		};
-		return registerResponse;
-	}
+		
 });
+
