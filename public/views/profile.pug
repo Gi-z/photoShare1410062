@@ -1,0 +1,51 @@
+html
+	head
+		link(rel="stylesheet", href="https://fonts.googleapis.com/css?family=Montserrat")
+
+		link(rel="stylesheet", href="/bower_components/bootstrap/dist/css/bootstrap.min.css")
+		link(rel="stylesheet", href="/bower_components/jquery-ui/themes/smoothness/jquery-ui.min.css")
+		script(src="/bower_components/jquery/dist/jquery.min.js")
+		script(src="/bower_components/jquery-ui/jquery-ui.min.js")
+		script(src="/bower_components/bootstrap/dist/js/bootstrap.min.js")
+
+		link(rel="stylesheet", href="../css/base.css")
+		script(src='//ajax.googleapis.com/ajax/libs/angularjs/1.2.6/angular.min.js')
+		script(src="http://cdnjs.cloudflare.com/ajax/libs/angular-ui-router/0.2.10/angular-ui-router.js")
+		script(src="../js/angular/app.js")
+
+		script(src="../js/services/profileService.js")
+		script(src="../js/controllers/profileController.js")
+		script.
+			var profile = "#{user}";
+			console.log(profile);
+	body
+
+	nav(class="navbar navbar-default")
+		div(class="container-fluid")
+			ul(class="nav navbar-nav")
+				li 
+					a(href="/home") home
+				li(class="active") 
+					a(href="/profile") profile
+				li 
+					a(href="/discover") discover
+				li
+					a(href="/upload") upload
+				li 
+					a(href="/login") login	
+
+	div(id="test", ng-app="profileApp", ng-controller="profileController", ng-init="uname = profile")
+		script.
+			uname = profile;
+			
+		div(id="profileDiv")
+			h2(id="name") {{user.name}}
+			
+			h3(id="age") {{user.age}}
+			h3(id="bio") {{user.bio}}
+			
+			div(id="profileImg")
+				img(ng-src="{{user.profile_pic}}")
+			
+			div(id="uploads")
+	

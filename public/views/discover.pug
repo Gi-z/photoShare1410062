@@ -16,26 +16,26 @@ html
 		script(src="http://cdnjs.cloudflare.com/ajax/libs/angular-ui-router/0.2.10/angular-ui-router.js")
 		script(src="../js/angular/app.js")
 	
-		script(src="../js/services/homeFeedService.js")
-		script(src="../js/controllers/homeFeedController.js")
+		script(src="../js/services/discoverService.js")
+		script(src="../js/controllers/discoverController.js")
 
 	body
 
 	nav(class="navbar navbar-default")
 		div(class="container-fluid")
 			ul(class="nav navbar-nav")
-				li(class="active") 
+				li 
 					a(href="/home") home
 				li 
 					a(href="/profile") profile
-				li 
+				li(class="active") 
 					a(href="/discover") discover
 				li
 					a(href="/upload") upload
 				li 
 					a(href="/login") login	
 
-	div(id="test", ng-app="homeApp", ng-controller="homeFeedController")
+	div(id="test", ng-app="discoverApp", ng-controller="discoverController")
 	
 		div(id="postBackDiv", ng-repeat="post in posts", ng-if="error != true")
 			a(href="/post/{{post._id}}")

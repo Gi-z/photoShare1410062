@@ -168,7 +168,8 @@ exports.getDiscover = function(req, res, done) {
 		else
 			res.json({
 				"success": "true",
-				"msg": "Top posts were successfully retrieved."
+				"msg": "Top posts were successfully retrieved.",
+				"posts": JSON.stringify(posts)
 			});
 	});		
 }

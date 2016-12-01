@@ -5,35 +5,22 @@ const multer = require("multer");
 
 const apiController = require("../controllers/apiController.js");
 const postController = require("../controllers/postController.js");
+const pageController = require("../controllers/pageController.js");
 
 router.use("/*", function(req, res, next) {
 	console.log(req.params);
 	next();
 });
 
-router.get('/', function(req, res) {
-	res.redirect("/home");
-});
-
-router.get("/home", function(req, res) {
-	res.render('homepage', { title: "Test", message: "This is a test message" });
-});
-
-router.get('/register', function(req, res) {
-	res.render('register');
-});
-
-router.get('/login', function(req, res) {
-	res.render('login');
-});
-
-router.get("/upload", function(req, res) {
-	res.render('upload');
-});	
-
+router.get('/', pageController.home);
+router.get("/home", pageController.home);
+router.get('/register', pageController.register);
+router.get('/login', pageController.login);
+router.get("/upload", pageController.upload);	
 router.get("/post/", postController.emptyPost);
 router.get("/post/:post_id", postController.loadPost);
-
+router.get("/profile", pageController.profile);
+router.get("/discover", pageController.discover);
 //API Routes
 
 router.get("/api/home", apiController.getHome);
@@ -41,9 +28,7 @@ router.get("/api/discover", apiController.getDiscover);
 router.get("/api/post/:post_id", apiController.getPost);
 router.get("/api/image/:post_id", apiController.image);
 router.get("/api/profile/:username", apiController.profile);
-
 router.post('/api/register', passport.authenticate('register'), apiController.register);
-
 router.post('/api/login', passport.authenticate('loggy'), apiController.login);
 
 var uploading = multer({ storage: multer.memoryStorage() });                                                                                                                         var type = uploading.single("file");
