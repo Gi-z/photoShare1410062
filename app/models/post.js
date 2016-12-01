@@ -14,6 +14,7 @@ var postSchema = new Schema({
 		geotag_location_long: Number,
 		geotag_location_lat: Number
 	},
+	rating: Number,
 	comments: String
 });
 

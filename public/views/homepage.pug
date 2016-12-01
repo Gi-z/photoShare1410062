@@ -11,10 +11,14 @@ html
 		script(src="bower_components/bootstrap/dist/js/bootstrap.min.js")
 
 		link(rel="stylesheet", href="../css/base.css")
+		link(rel="stylesheet", href="../css/postFeed.css")
 		script(src='//ajax.googleapis.com/ajax/libs/angularjs/1.2.6/angular.min.js')
 		script(src="http://cdnjs.cloudflare.com/ajax/libs/angular-ui-router/0.2.10/angular-ui-router.js")
 		script(src="../js/angular/app.js")
-		
+	
+		script(src="../js/services/homeFeedService.js")
+		script(src="../js/controllers/homeFeedController.js")
+
 	body
 
 	nav(class="navbar navbar-default")
@@ -31,10 +35,12 @@ html
 				li 
 					a(href="/login") login	
 
-	div(id="test")
+	div(id="test", ng-app="homeApp", ng-controller="homeFeedController")
 	
-		
+		div(id="postBackDiv", ng-repeat="post in posts", ng-if="error != true")
+			img(ng-src="{{post.url}}")
+			h2(id="title") {{post.title}}
+			h3(id="user") by {{post.user}}
+			p(id="caption") {{post.caption}}
+			//Space for comments and stuff.
 			
-
-
-		
