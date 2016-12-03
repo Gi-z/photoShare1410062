@@ -9,19 +9,19 @@ module.exports = function(passport) {
 		passReqToCallback: true
 	},
 	function(req, username, password, done) {
-		console.log(req);
 		console.log(username + " " + password);
 		User.findOne({ 'username': username },
 			function(err, user) {
-		
-				if (err)
-					return done(err);
+			
+				if (err != null) {
+					return done(null, err);
+				}
 
-				if (!user) {
+				if (user == null) {
 					console.log('Invalid username!');
 					return done(null, false);
 				}
-
+	
 				if (!isValidPassword(user, password)) {
 					console.log('Invalid password!');
 					return done(null, false);

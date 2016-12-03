@@ -12,10 +12,10 @@ var userSchema = new Schema({
 	admin: Boolean,
 	email: String,
 	profile_pic: String,
+	rating: Number,
 	profile: {
 		age: Number,
-		bio: String,
-		rating: Number
+		bio: String
 	},
 	created_at: Date,
 	last_accessed: Date

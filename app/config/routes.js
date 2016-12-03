@@ -14,9 +14,6 @@ router.use("/*", function(req, res, next) {
 });
 
 router.get('/', pageController.home);
-router.get("/F2A0339688B5C035FD8AD4FD5AB8AC27.txt", function (req, res, done) {
-	res.sendFile(__dirname + "/F2A0339688B5C035FD8AD4FD5AB8AC27.txt");
-});
 
 router.get("/home", pageController.home);
 router.get('/register', pageController.register);
