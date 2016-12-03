@@ -2,3 +2,18 @@ img {
 	width: 300px;
 	height: auto;
 }
+
+#captionText {
+	overflow:hidden; text-overflow-multiline:ellipsis;height:auto;
+}
+
+#feedPost {
+	width: 60%;
+	height: 500px;
+	float: left;
+}
+
+#feedPostInfo {
+	width: 300px
+	height: auto;
+}	

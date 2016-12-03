@@ -15,7 +15,6 @@ var postSchema = new Schema({
 		geotag_location_lat: Number
 	},
 	rating: Number,
-	comments: String
 });
 
 var Post = mongoose.model('Post', postSchema);

@@ -21,8 +21,15 @@ for (var i=0; i<170; i++) {
 	newTestPost.uploaded_at = new Date();
 	newTestPost.location = locationsArray[Math.floor(Math.random()*(locationsArray.length-1))+1];
 	var newI = i;
-	if (i<100)
-		newI = "0"+i
+	if (i<10) {
+		newI = "00"+i;
+	}
+	else if (i<100 && i>10) {
+		newI = "0"+i;
+	}
+	else {
+		newI = i;
+	}	
 
 	var img = "https://s3-eu-west-1.amazonaws.com/photosharetestuserdata/photo_" + newI + ".jpg";
 	newTestPost.url = img;
@@ -31,7 +38,7 @@ for (var i=0; i<170; i++) {
 		caption: "Quisque rutrum. Aenean imperdiet. Etiam ultricies nisi vel augue. Curabitur ullamcorper ultricies nisi. Nam eget dui. Etiam rhoncus. Maecenas tempus, tellus eget condimentum rhoncus, sem quam semper libero, sit amet adipiscing sem neque sed ipsum.",
 	};
 
-	newTestPost.rating = Math.floor(Math.random()*4.999)+0.001;
+	newTestPost.rating = +((Math.random()*5.000)+0.001).toFixed(3);
 	newTestPost.save(function(err) {
 		if (err) {
 			console.log("Error saving test post: " + err);

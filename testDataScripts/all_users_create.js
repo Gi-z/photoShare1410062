@@ -17,6 +17,17 @@ for (var i=0; i<27; i++) {
 	var newTestUser = new User();
 
 	newTestUser.username = "testUser"+i;
+	var newI;
+	if (i<10) {
+		newI = "00"+i;
+	}
+	else if (i<100 && i>10) {
+		newI = "0"+i;
+	}
+	else {
+		newI = i;
+	}		
+
 	var img = "https://s3-eu-west-1.amazonaws.com/photosharetestuserdata/profile_" + i + ".gif";
 
 	newTestUser.name = firstNameArray[i] + " " + lastNameArray[i];
@@ -40,7 +51,7 @@ for (var i=0; i<27; i++) {
 	newTestUser.profile = {
 		age: Math.floor(Math.random() * 50) + 18,
 		bio: "Lorem ipsum dolor sit amet, consectetuer adipiscing elit. Aenean commodo ligula eget dolor. Aenean massa. Cum sociis natoque penatibus et magnis dis parturient montes, nascetur ridiculus mus. Donec quam felis, ultricies nec, pellentesque eu, pretium quis, sem. Nulla consequat massa quis enim.",
-		rating: 3.000
+		rating: +((Math.random() * 5.000) + 0.001).toFixed(3)
 	};
 	newTestUser.created_at = new Date();
 	newTestUser.last_accessed = new Date();

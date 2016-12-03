@@ -1,5 +1,6 @@
 html
 	head
+		title= title
 		
 		link(rel="stylesheet", href="https://fonts.googleapis.com/css?family=Montserrat")
 
@@ -13,10 +14,10 @@ html
 		link(rel="stylesheet", href="../css/postFeed.css")
 		script(src='bower_components/angular/angular.js')
 		script(src="../js/angular/app.js")
-	
-		script(src="../js/services/homeFeedService.js")
-		script(src="../js/controllers/homeFeedController.js")
-
+		
+		script(src="../js/services/registerService.js")
+		script(src="../js/controllers/registerFormController.js")
+		
 	body
 
 	nav(class="navbar navbar-default")
@@ -29,22 +30,29 @@ html
 				li 
 					a(href="/discover") discover
 				li
-					a(href="/upload") upload
-				li 
-					a(href="/login") login	
+					a(href="/upload") upload	
 
-	div(id="test", ng-app="homeApp", ng-controller="homeFeedController")
+	div(id="test" ng-app="registerApp", ng-controller="formController")
+
+		form(id="register_form")
+			span.label Name
+				input(type="text", name="name")
+
+			span.label Username
+				input(type="text", name="username")
+			
+			span.label Password
+				input(type="password", name="password")
+
+			span.label Re-enter Password
+				input(type="password", name="passwordconf")
+
+			span.label Email
+				input(type="email", name="email")
+
+			span.label Re-enter Email
+				input(type="email", name="emailconf")
+
+			input(type="submit", id="register", text="Register")
+
 	
-		div(id="postBackDiv", ng-repeat="post in posts", ng-if="error != true")
-			div(id="feedPost", class="thumbnail")
-				a(href="/post/{{post._id}}")
-					img(ng-src="{{post.url}}")
-				div(id="feedPostInfo")
-					h2(id="title") {{post.title}}
-					h3(id="user") by {{post.user}}
-					
-					div(id="captionText")
-						p(id="caption") {{post.meta.caption}}
-				br
-				//Space for comments and stuff.
-				

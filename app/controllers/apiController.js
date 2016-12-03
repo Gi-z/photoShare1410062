@@ -7,6 +7,7 @@ const stringify = require("node-stringify");
 
 const User = require("../models/user.js");
 const Post = require("../models/post.js");
+const Comment = require("../models/comment.js");
 
 exports.register = function(req, res, done) {
 	if (res.user) {
@@ -158,6 +159,10 @@ exports.image = function(req, res, done) {
 	});
 }
 
+exports.editImage = function(req, res, done) {
+	
+}
+
 exports.getDiscover = function(req, res, done) {
 	Post.find().sort({"rating": -1}).limit(100).exec(function(err, posts) {
 		if (err)
@@ -212,4 +217,40 @@ exports.profile = function(req, res, done) {
 				"user": respDict
 			});	
 	});
-}	
+}
+
+exports.getComment = function(req, res, done) {
+	Comment.findOne({ _id: req.param("comment_id") }, function(err, comment) {
+		if (err) {
+			console.log("Error loading comment: " + err);
+			res.json({
+				"success": "false",
+				"msg": "Error loading comment: " + req.param("comment_id")
+			});
+		}
+		else {
+			var respDict = {};
+			respDict["user"] = comment.user;
+			respDict["photo_id"] = comment.photo_id;
+			respDict["comment_body"] = comment.comment_body;
+			respDict["comment_reaction"] = comment.comment_reaction;
+			respDict["posted_at"] = comment.posted_at;
+			respDict["comment_id_resp"] = comment.comment_id_resp;
+			respDict["rating"] = comment.rating;
+
+			res.json({
+				"success": "true",
+				"msg": "Comment " + req.param("comment_id") + " loaded successfully.",
+				"comment": respDict
+			}); 
+		}
+	});
+}
+
+exports.newComment = function(req, res, done) {
+	
+}
+
+exports.editComment = function(req, res, done) {	
+	
+}

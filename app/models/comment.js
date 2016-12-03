@@ -7,8 +7,8 @@ var commentSchema = new Schema({
 	comment_body: String,
 	comment_reaction: String,
 	posted_at: Date,
-	comment: String,
-	likes: Number
+	comment_id_resp: String,
+	rating: Number
 });
 
 var Comment = mongoose.model('Comment', commentSchema);

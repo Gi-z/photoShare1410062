@@ -13,8 +13,10 @@ html
 		link(rel="stylesheet", href="../css/base.css")
 		script(src='//ajax.googleapis.com/ajax/libs/angularjs/1.2.6/angular.min.js')
 		script(src="http://cdnjs.cloudflare.com/ajax/libs/angular-ui-router/0.2.10/angular-ui-router.js")
-		script(src="../js/controllers/registerFormController.js")
-		
+	
+		script(src="../js/angular/app.js")
+		script(src="../js/services/loginService.js")
+		script(src="../js/controllers/loginFormController.js")
 	body
 
 	nav(class="navbar navbar-default")
@@ -29,27 +31,16 @@ html
 				li
 					a(href="/upload") upload	
 
-	div(id="test" ng-app="registerApp", ng-controller="formController")
+	div(id="loginForm", ng-app="loginApp", ng-controller="formController")
+		div(id="test")
+			form(id="login_form")
+				div(class="form-group form-group-sm")
+					span.label Username
+					input(type="text", class="form-control", name="username")
+				
+				div(class="form-group form-group-sm")
+					span.label Password
+					input(type="password", class="form-control", name="password")
 
-		form(id="register_form")
-			span.label Name
-				input(type="text", name="name")
-
-			span.label Username
-				input(type="text", name="username")
-			
-			span.label Password
-				input(type="password", name="password")
-
-			span.label Re-enter Password
-				input(type="password", name="passwordconf")
-
-			span.label Email
-				input(type="email", name="email")
-
-			span.label Re-enter Email
-				input(type="email", name="emailconf")
-
-			input(type="submit", id="register", text="Register")
-
-	
+				div(class="form-group form-group-sm")
+					input(type="submit", class="btn btn-default", name="login", ng-click="submitForm()")
