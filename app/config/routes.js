@@ -38,7 +38,7 @@ router.post('/api/login', passport.authenticate('loggy'), apiController.login);
 
 router.get("/api/comment/:comment_id", apiController.getComment);
 router.post("/api/comment", apiController.newComment);
-router.post("/api/comment/edit/:comment_id", apiController.editComment);
+//router.post("/api/comment/edit/:comment_id", apiController.editComment);
 
 var uploading = multer({ storage: multer.memoryStorage() });                                                                                                                         var type = uploading.single("file");
 router.post("/api/upload_image", type, apiController.upload);

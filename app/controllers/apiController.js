@@ -248,7 +248,55 @@ exports.getComment = function(req, res, done) {
 }
 
 exports.newComment = function(req, res, done) {
+
+	if (!req.user)
+		return res.json({
+			"success": "false",
+			"msg": "You must be logged in to perform this action."
+		});
+
+	var userIn = req.user.username;
+	var photo_idIn = req.param("photo_id");
+	var comment_bodyIn = req.param("comment_body");
+
+	//Will not be implemented in this release.
+	var comment_reactionIn = req.param("comment_reaction");
+	var posted_atIn = new Date();
 	
+	//Will not be implemented in this release.
+	var comment_id_respIn = null;
+	
+	//Comments have a base rating of 3 when created.
+	//As do posts.
+	var ratingIn = 3;
+
+	if (userIn == null || photo_idIn == null || comment_bodyIn == null || posted_atIn == null) {
+		return res.json({
+			"success": "false",
+			"msg": "Incorrect parameters were sent. Try again later."
+		});
+	}
+
+	var newComm = new Comment(); 
+	newComm.user = userIn;	
+	newComm.photo_id = photo_idIn;
+	newComm.comment_body = comment_bodyIn;
+	//newComm.comment_reaction = comment_reactionIn;
+	newComm.posted_at = posted_atIn;
+	newComm.save(function(err) {
+		if (err != null) {
+			return res.json({
+				"success": "false",
+				"msg": "Error creating comment."
+			});
+		}
+		else {
+			return res.json({
+				"success": "true",
+				"msg": "Comment successfully created."
+			});
+		}
+	});
 }
 
 exports.editComment = function(req, res, done) {	
