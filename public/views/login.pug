@@ -11,8 +11,7 @@ html
 		script(src="bower_components/bootstrap/dist/js/bootstrap.min.js")
 
 		link(rel="stylesheet", href="../css/base.css")
-		script(src='//ajax.googleapis.com/ajax/libs/angularjs/1.2.6/angular.min.js')
-		script(src="http://cdnjs.cloudflare.com/ajax/libs/angular-ui-router/0.2.10/angular-ui-router.js")
+		script(src='bower_components/angular/angular.min.js')
 	
 		script(src="../js/angular/app.js")
 		script(src="../js/services/loginService.js")
@@ -44,3 +43,11 @@ html
 
 				div(class="form-group form-group-sm")
 					input(type="submit", class="btn btn-default", name="login", ng-click="submitForm()")
+		
+				div(class="alert alert-success", ng-if="successfulLogin")
+					strong Success!
+					p Redirecting to profile page. 
+		
+				div(class="alert alert-danger", ng-if="unsuccessfulLogin")
+					strong Failed
+					p {{logMessage}}	

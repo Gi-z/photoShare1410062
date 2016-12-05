@@ -9,7 +9,6 @@ const pageController = require("../controllers/pageController.js");
 const ratingController = require("../controllers/ratingController.js");
 
 router.use("/*", function(req, res, next) {
-	console.log(req.params);
 	next();
 });
 
@@ -33,8 +32,55 @@ router.get("/api/profile/:username", apiController.profile);
 
 router.post("/api/profile/:username/rate", ratingController.rateUser);
 
-router.post('/api/register', passport.authenticate('register'), apiController.register);
-router.post('/api/login', passport.authenticate('loggy'), apiController.login);
+router.post('/api/register', function (req, res, next) {
+	passport.authenticate('register', function(err, user, info) {
+		if (err) {
+			return next(err);
+		}
+		console.log(req.body);	
+	
+		if (!user) {
+			return res.status(403).json({
+				"success": "false",
+				"msg": "Registration failed."
+			});
+		}
+
+		return res.json({
+			"success": "true",
+			"msg": "Registration successful!",
+			"user": user.username
+		});
+	})(req, res, next);			
+});
+
+router.post('/api/login', function (req, res, next) {
+	passport.authenticate('loggy', function(err, user, info) {
+		if (err) {
+			return next(err);
+		}
+		
+		if (!user) {
+			return res.status(403).json({
+				"success": "false",
+				"msg": "Login failed."
+			});
+		}
+
+		req.logIn(user, function(err) {
+			if (err) {
+				return next(err);
+			}
+			else {	
+				return res.json({
+					"success": "true",
+					"msg": "Login successful!",
+					"user": user.username
+				});
+			}
+		});
+	})(req, res, next);			
+});
 
 router.get("/api/comment/:comment_id", apiController.getComment);
 router.post("/api/comment", apiController.newComment);

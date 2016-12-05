@@ -11,6 +11,8 @@ html
 
 		link(rel="stylesheet", href="../css/base.css")
 		link(rel="stylesheet", href="../css/postFeed.css")
+		link(rel="stylesheet", href="../css/postView.css")
+
 		script(src='bower_components/angular/angular.js')
 		script(src="../js/angular/app.js")
 	
@@ -35,16 +37,25 @@ html
 
 	div(id="test", ng-app="homeApp", ng-controller="homeFeedController")
 	
-		div(id="postBackDiv", ng-repeat="post in posts", ng-if="error != true")
-			div(id="feedPost", class="thumbnail")
-				a(href="/post/{{post._id}}")
-					img(ng-src="{{post.url}}")
-				div(id="feedPostInfo")
-					h2(id="title") {{post.title}}
-					h3(id="user") by {{post.user}}
+		div(id="postBackDiv", ng-repeat="post in posts", ng-if="!error")
+				
+			div(class="row row-margin-bottom")
+			div(class="col-md-5 no-padding lib-item" data-category="view")
+				div(class="lib-panel")
+					div(class="row")
+						div(class="col-md-6")
+							a(href="/post/{{post._id}}")
+								img(class="lib-img-show", ng-src="{{post.url}}")
+						div(class="col-md-6")
+							div(class="lib-row lib-header")
+								//Post title.
+								div(class="lib-header-separator")
+							div(class="lib-row lib-desc")
+								h2(id="title") {{post.title}}
+								h3(id="user") by {{post.user}}
 					
-					div(id="captionText")
-						p(id="caption") {{post.meta.caption}}
-				br
+								div(id="captionText")
+									p(id="caption" class="line-clamp") {{post.meta.caption}}
+									br
 				//Space for comments and stuff.
 				

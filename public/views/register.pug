@@ -9,14 +9,15 @@ html
 		script(src="bower_components/jquery/dist/jquery.min.js")
 		script(src="bower_components/jquery-ui/jquery-ui.min.js")
 		script(src="bower_components/bootstrap/dist/js/bootstrap.min.js")
+		script(src="bower_components/jquery-form-validator/form-validator/jquery.form-validator.js")
 
 		link(rel="stylesheet", href="../css/base.css")
-		script(src='//ajax.googleapis.com/ajax/libs/angularjs/1.2.6/angular.min.js')
-		script(src="http://cdnjs.cloudflare.com/ajax/libs/angular-ui-router/0.2.10/angular-ui-router.js")
+		script(src='bower_components/angular/angular.min.js')
 	
 		script(src="../js/angular/app.js")
-		script(src="../js/services/loginService.js")
-		script(src="../js/controllers/loginFormController.js")
+		script(src="../js/services/registerService.js")
+		script(src="../js/controllers/registerFormController.js")
+		
 	body
 
 	nav(class="navbar navbar-default")
@@ -31,16 +32,49 @@ html
 				li
 					a(href="/upload") upload	
 
-	div(id="loginForm", ng-app="loginApp", ng-controller="formController")
+	div(id="registerForm", ng-app="registerApp", ng-controller="formController")
 		div(id="test")
-			form(id="login_form")
+			form(id="register_form")
+				div(class="form-group form-group-sm")
+					span.label Name
+					input(type="text", class="form-control", name="name", data-validation="length", data-validation-length="max50")
+
 				div(class="form-group form-group-sm")
 					span.label Username
-					input(type="text", class="form-control", name="username")
+					input(type="text", class="form-control", name="username", data-validation="length", data-validation-length="max20")
 				
 				div(class="form-group form-group-sm")
 					span.label Password
-					input(type="password", class="form-control", name="password")
+					input(type="password", class="form-control", name="password_confirmation", data-validation="length", data-validation-length="min5max100")
+				
+				div(class="form-group form-group-sm")
+					span.label Confirm Password
+					input(type="password", class="form-control", name="password", data-validation="confirmation")
 
 				div(class="form-group form-group-sm")
-					input(type="submit", class="btn btn-default", name="login", ng-click="submitForm()")
+					span.label Email Address
+					input(type="email", class="form-control", name="email_confirmation", data-validation="email")
+			
+				div(class="form-group form-group-sm")
+					span.label Confirm Email Address
+					input(type="email", class="form-control", name="email", data-validation="confirmation")
+		
+				div(class="form-group form-group-sm")
+					span.label Age
+					input(type="text", class="form-control", name="age", data-validation="number", data-validation-allowing="range[1;100]")
+
+				div(class="form-group form-group-sm")
+					input(type="submit", ng-click="submitForm()", class="btn btn-default")
+
+				div(class="alert alert-success", ng-if="successfulRegistration")
+					strong Success!
+					p Redirecting to login page. 
+		
+				div(class="alert alert-danger", ng-if="unsuccessfulRegistration")
+					strong Failed
+					p {{regMessage}}	
+
+				script.
+					$.validate({
+						modules: 'security'
+					});	

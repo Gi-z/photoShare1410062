@@ -51,8 +51,8 @@ for (var i=0; i<27; i++) {
 	newTestUser.profile = {
 		age: Math.floor(Math.random() * 50) + 18,
 		bio: "Lorem ipsum dolor sit amet, consectetuer adipiscing elit. Aenean commodo ligula eget dolor. Aenean massa. Cum sociis natoque penatibus et magnis dis parturient montes, nascetur ridiculus mus. Donec quam felis, ultricies nec, pellentesque eu, pretium quis, sem. Nulla consequat massa quis enim.",
-		rating: +((Math.random() * 5.000) + 0.001).toFixed(3)
 	};
+	newTestUser.rating = +((Math.random() * 5.000) + 0.001).toFixed(3);
 	newTestUser.created_at = new Date();
 	newTestUser.last_accessed = new Date();
 	

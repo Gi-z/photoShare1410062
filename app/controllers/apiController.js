@@ -9,7 +9,7 @@ const User = require("../models/user.js");
 const Post = require("../models/post.js");
 const Comment = require("../models/comment.js");
 
-exports.register = function(req, res, done) {
+exports.register = function(req, res, done) {	
 	if (res.user) {
 		res.json({
 			"success": "true",
@@ -19,6 +19,7 @@ exports.register = function(req, res, done) {
 	else {
 		res.json({
 			"success": "false",
+			"msg": "User creation failed."
 		});
 	}
 }
@@ -164,7 +165,7 @@ exports.editImage = function(req, res, done) {
 }
 
 exports.getDiscover = function(req, res, done) {
-	Post.find().sort({"rating": -1}).limit(100).exec(function(err, posts) {
+	Post.find().sort({"rating": -1}).limit(25).exec(function(err, posts) {
 		if (err)
 			res.json({
 				"success": "false",
@@ -180,7 +181,7 @@ exports.getDiscover = function(req, res, done) {
 }
 
 exports.getHome = function(req, res, done) {
-	Post.find().sort({"uploaded_at": -1}).limit(100).exec(function(err, posts) {
+	Post.find().sort({"uploaded_at": -1}).limit(25).exec(function(err, posts) {
 		if (err)
 			res.json({
 				"success": "false",

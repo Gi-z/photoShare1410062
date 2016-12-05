@@ -9,29 +9,31 @@ module.exports = function(passport) {
 		passReqToCallback: true
 	},
 	function(req, username, password, done) {
+		console.log("Started here");
+
+		var username = req.param("username");
+		var password = req.param("password");
+		var name = req.param("name");
+		var age = req.param("age");
+		var email = req.param("email");
+		console.log(username + " " + password + " " + name + " " + age + " " + email);
 	
-		findOrCreateUser = function() {
 	
-			User.findOne({ "email": req.param("email")}, function(err, user) {
+			User.findOne({ "email": email}, function(err, user) {
 				if (err) {
-					console.log("Error in validation: " + err);
 					return done(err);
 				}
 				
 				if (user) {
-					console.log("User with email address already exists!");
 					return done(null, false);
 				}
-			});
 				
 			User.findOne({ 'username': username}, function(err, user) {
 				if (err) {
-					console.log('Error in Register: '+err);
 					return done(err);
 				}
 
 				if (user) {
-					console.log('Username has been taken: '+username);
 					return done(null, false);
 				}
 				else {
@@ -52,26 +54,27 @@ module.exports = function(passport) {
 						newUser.salt = salt;
 					});
 
-					newUser.name = req.param('name');
-					newUser.email = req.param('email');
+					newUser.name = name;
+					newUser.email = email;
+			
+					newUser.rating = +((Math.random() * 5.000) + 0.001).toFixed(3);
+	
+					//Not implemented.
 					newUser.admin = false;
+			
 					newUser.created_at = new Date();
 					newUser.last_accessed = new Date();
 					
 					newUser.save(function(err) {
 						if (err) {
-							console.log('Error in saving user: ' + err);
 							throw err;
 						}
-						console.log('User registration successful.');
 						return done(null, newUser);
 					});
 				}
 			});
-		};
-
-		process.nextTick(findOrCreateUser);
+		});
 	})	
-	);
+);
 
 }
