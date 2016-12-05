@@ -60,7 +60,7 @@ html
 				div(id="profileImg")
 					img(ng-src="{{user.profile_pic}}")
 				
-				div(id="ratingSlot")
+				div(id="ratingSlot" ng-if="userLoggedIn['success']")
 					p Your rating: 
 					select(id="ratingControl", ng-model="rateOption", ng-change="rateUser(rateOption)", ng-disabled="madeRating")
 						option(value="1") 1

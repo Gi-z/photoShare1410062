@@ -65,9 +65,8 @@ html
 				
 				div(id="postInfo")
 					div(id="exifSpot")
-						p(id="exifHighlights")			
-	
-					div(id="ratingSlot")
+						p(id="exifHighlights")
+					div(id="ratingSlot", ng-if="userLoggedIn['success']")
 						p Your rating: 
 						select(id="ratingControl", ng-model="rateOption", ng-change="rateImage(rateOption)", ng-disabled="madeRating")
 							option(value="1") 1
