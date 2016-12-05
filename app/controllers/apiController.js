@@ -80,11 +80,11 @@ exports.getPost = function(req, res, done) {
 
 exports.upload = function(req, res, done) {
 		
-	var postTitle = req.query("title");
-	var postCaption = req.query("caption");
+	var postTitle = req.param("title");
+	var postCaption = req.param("caption");
 	var postUser = req.user.username;
 	var postUploadedAt = new Date();
-	var postLocation = req.query("location");
+	var postLocation = req.param("location");
 
 	var buf = req.file.buffer;
 	
@@ -136,7 +136,8 @@ exports.upload = function(req, res, done) {
 		
 					res.json({
 						"success": "true",
-						"msg": "Post created with id " + newPost._id
+						"msg": "Post created.",
+						"id": newPost._id
 					});
 				});
 			});

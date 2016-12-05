@@ -20,19 +20,28 @@ html
 		
 	body
 
-	nav(class="navbar navbar-default")
-		div(class="container-fluid")
-			ul(class="nav navbar-nav")
-				li
-					a(href="/home") home
-				li 
-					a(href="/profile") profile
-				li 
-					a(href="/discover") discover
-				li(class="active")
-					a(href="/upload") upload	
+	script.
+		if ("#{user}")
+			var userLoggedIn = { "success": true, "user": "#{user}" };
+		else
+			var userLoggedIn = { "success": false };
 
-	div(id="uploadForm", ng-app="uploadApp", ng-controller="uploadFormController")
+	div(ng-app="uploadApp", ng-controller="formController", ng-init="uLog = userLoggedIn")
+		script.
+			uLog = userLoggedIn;
+
+		nav(class="navbar navbar-default")
+			div(class="container-fluid")
+				ul(class="nav navbar-nav")
+					li
+						a(href="/home") home
+					li
+						a(href="/profile") profile
+					li 
+						a(href="/discover") discover
+					li(class="active")
+						a(href="/upload") upload
+
 		div(id="test")
 			form(id="upload_form", enctype="multipart/form-data")
 				div(class="form-group form-group-sm")
