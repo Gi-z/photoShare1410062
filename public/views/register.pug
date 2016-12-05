@@ -23,48 +23,60 @@ html
 	nav(class="navbar navbar-default")
 		div(class="container-fluid")
 			ul(class="nav navbar-nav")
-				li(class="active") 
-					a(href="/home") home
-				li 
-					a(href="/profile") profile
-				li 
-					a(href="/discover") discover
 				li
-					a(href="/upload") upload	
+					a(href="/home") home
+				li
+					a(href="/login") login
+				li(class="active")
+					a(href="/register") register
+				li
+					a(href="/discover") discover
+					
 
-	div(id="registerForm", ng-app="registerApp", ng-controller="formController")
-		div(id="test")
+	div(id="registerForm", class="form-horizontal", ng-app="registerApp", ng-controller="formController")
+		div(id="test", class="testForm")
 			form(id="register_form")
-				div(class="form-group form-group-sm")
-					span.label Name
-					input(type="text", class="form-control", name="name", data-validation="length", data-validation-length="max50")
+				div(class="control-group")
+					label(class="control-label") Name
+					div(class="controls")
+						input(type="text", class="input-xlarge", id="name", name="name", data-validation="length", data-validation-length="max50")
+						p(class="help-block") Name can contain any any type of character in the UTF-8 set. Up to a maximum of 50 characters.
 
-				div(class="form-group form-group-sm")
-					span.label Username
-					input(type="text", class="form-control", name="username", data-validation="length", data-validation-length="max20")
+				div(class="control-group")
+					label(class="control-label") Username
+					div(class="controls")
+						input(type="text", class="input-xlarge", id="username", name="username", data-validation="length", data-validation-length="max20")
+						p(class="help-block") Username can also contain any character in the UTF-8 set. A maximum of 20 characters.			
+	
+				div(class="control-group")
+					label(class="control-label" for="password") Password
+					div(class="controls")
+						input(type="password", class="input-xlarge", id="password_confirmation", name="password_confirmation", data-validation="length", data-validation-length="min5max100")
+						p(class="help-block") Enter a password with at least 5 characters. No more than 100 characters long. Special characters are allowed and encouraged.
 				
-				div(class="form-group form-group-sm")
-					span.label Password
-					input(type="password", class="form-control", name="password_confirmation", data-validation="length", data-validation-length="min5max100")
-				
-				div(class="form-group form-group-sm")
-					span.label Confirm Password
-					input(type="password", class="form-control", name="password", data-validation="confirmation")
+				div(class="control-group")
+					label(class="control-label") Confirm Password
+					div(class="controls")
+						input(type="password", class="input-xlarge", name="password", data-validation="confirmation")
 
-				div(class="form-group form-group-sm")
-					span.label Email Address
-					input(type="email", class="form-control", name="email_confirmation", data-validation="email")
+				div(class="control-group")
+					label(class="control-label") Email Address
+					div(class="controls")
+						input(type="email", class="input-xlarge", name="email_confirmation", data-validation="email")
 			
-				div(class="form-group form-group-sm")
-					span.label Confirm Email Address
-					input(type="email", class="form-control", name="email", data-validation="confirmation")
+				div(class="control-group")
+					label(class="control-label") Confirm Email Address
+					div(class="controls")
+						input(type="email", class="input-xlarge", name="email", data-validation="confirmation")
 		
-				div(class="form-group form-group-sm")
-					span.label Age
-					input(type="text", class="form-control", name="age", data-validation="number", data-validation-allowing="range[1;100]")
+				div(class="control-group")
+					label(class="control-label") Age
+					div(class="controls")
+						input(type="text", class="input-xlarge", name="age", data-validation="number", data-validation-allowing="range[1;100]")
 
-				div(class="form-group form-group-sm")
-					input(type="submit", ng-click="submitForm()", class="btn btn-default")
+				div(class="control-group")
+					div(class="controls")
+						button(ng-click="submitForm()", class="btn btn-success")
 
 				div(class="alert alert-success", ng-if="successfulRegistration")
 					strong Success!

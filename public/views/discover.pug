@@ -12,8 +12,8 @@ html
 
 		link(rel="stylesheet", href="../css/base.css")
 		link(rel="stylesheet", href="../css/postFeed.css")
-		script(src='//ajax.googleapis.com/ajax/libs/angularjs/1.2.6/angular.min.js')
-		script(src="http://cdnjs.cloudflare.com/ajax/libs/angular-ui-router/0.2.10/angular-ui-router.js")
+		link(rel="stylesheet", href="../css/postView.css")
+		script(src='bower_components/angular/angular.min.js')
 		script(src="../js/angular/app.js")
 	
 		script(src="../js/services/discoverService.js")
@@ -35,13 +35,27 @@ html
 				li 
 					a(href="/login") login	
 
+	
 	div(id="test", ng-app="discoverApp", ng-controller="discoverController")
 	
-		div(id="postBackDiv", ng-repeat="post in posts", ng-if="error != true")
-			a(href="/post/{{post._id}}")
-				img(ng-src="{{post.url}}")
-			h2(id="title") {{post.title}}
-			h3(id="user") by {{post.user}}
-			p(id="caption") {{post.meta.caption}}
-			//Space for comments and stuff.
-			
+		div(id="postBackDiv", ng-repeat="post in posts", ng-if="!error")
+				
+			div(class="row row-margin-bottom")
+			div(class="col-md-5 no-padding lib-item" data-category="view")
+				div(class="lib-panel")
+					div(class="row")
+						div(class="col-md-6")
+							a(href="/post/{{post._id}}")
+								img(class="lib-img-show", ng-src="{{post.url}}")
+						div(class="col-md-6")
+							div(class="lib-row lib-header")
+								//Post title.
+								div(class="lib-header-separator")
+							div(class="lib-row lib-desc")
+								h2(id="title") {{post.title}}
+								h3(id="user") by {{post.user}}
+					
+								div(id="captionText")
+									p(id="caption" class="line-clamp") {{post.meta.caption}}
+									br
+				//Space for comments and stuff.

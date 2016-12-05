@@ -4,6 +4,10 @@ body {
 	background-color: #efbdd9;
 }
 
+#registerForm {
+	float: left;	
+}
+
 #test {
     margin-top: 25px;
     font-size: 21px;
