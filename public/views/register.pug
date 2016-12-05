@@ -1,6 +1,6 @@
 html
 	head
-		title= title
+		title= "Register"
 		
 		link(rel="stylesheet", href="https://fonts.googleapis.com/css?family=Montserrat")
 
@@ -80,13 +80,19 @@ html
 						input(type="email", class="input-xlarge", name="email", data-validation="confirmation")
 		
 				div(class="control-group")
+					label(class="control-label") Bio
+					div(class="controls")
+						input(type="text", class="input-xlarge", name="bio", data-validation="length", data-validation-length="max200")
+
+				div(class="control-group")
 					label(class="control-label") Age
 					div(class="controls")
 						input(type="text", class="input-xlarge", name="age", data-validation="number", data-validation-allowing="range[1;100]")
 
-				div(class="control-group")
-					div(class="controls")
-						button(ng-click="submitForm()", class="btn btn-success")
+				br
+				button(class="btn btn-default", ng-disabled="isSubmitting", type="reset") Reset
+
+				button(style='margin-left: 1px;', ng-click="submitForm()", class="btn btn-success", ng-disabled="isSubmitting", text="Submit") Submit
 
 				div(class="alert alert-success", ng-if="successfulRegistration")
 					strong Success!

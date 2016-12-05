@@ -51,7 +51,6 @@ exports.getPost = function(req, res, done) {
 					"msg": "Post retrieval failed with error: " + err
 				});
 			else
-				console.log("successful post load");
 				var postTitle = post.title;
 				var postUser = post.user;
 				var postUploadedAt = post.uploaded_at;
@@ -59,6 +58,7 @@ exports.getPost = function(req, res, done) {
 				var postUrl = post.url;
 				var postMeta = post.meta;
 				var postComments = post.comments;
+				var postRating = post.rating;
 
 				var postResp = {
 					"title": postTitle,
@@ -66,10 +66,10 @@ exports.getPost = function(req, res, done) {
 					"uploaded_at": postUploadedAt,
 					"location": postLocation,
 					"url": postUrl,
+					"rating": postRating,
 					"meta": postMeta,
 					"comments": postComments
 				};
-				console.log(postResp);
 				res.json({
 					"success": "true",
 					"msg": "Post was successfully retrieved.",
@@ -85,6 +85,7 @@ exports.upload = function(req, res, done) {
 	var postUser = req.user.username;
 	var postUploadedAt = new Date();
 	var postLocation = req.param("location");
+	var postRating = 3.000;
 
 	var buf = req.file.buffer;
 	
@@ -94,6 +95,7 @@ exports.upload = function(req, res, done) {
 	newPost.uploaded_at = postUploadedAt;
 	newPost.location = postLocation;
 	newPost.meta.caption = postCaption;
+	newPost.rating = postRating;
 
 	if (fileType(buf).mime.indexOf("image") == -1) {
 		res.json({
@@ -126,12 +128,10 @@ exports.upload = function(req, res, done) {
 				if (err)
 					console.log(err);
 				else 
-					console.log(data);
 					newPost.url = data["Location"];
 					newPost.save(function(err) {
 						if (err)
 							console.log("Error in creating post: " + err);
-						console.log("Post created with id " + newPost._id);
 					});
 		
 					res.json({
@@ -207,12 +207,12 @@ exports.profile = function(req, res, done) {
 			});
 		else
 			var respDict = {};
-			respDict["name"] = user["name"];
-			respDict["profile_pic"] = user["profile_pic"];
-			respDict["username"] = user["username"];
-			respDict["bio"] = user["profile"]["bio"];
-			respDict["rating"] = user["profile"]["rating"];		
-	
+			respDict["name"] = user.name;
+			respDict["profile_pic"] = user.profile_pic;
+			respDict["username"] = user.username;
+			respDict["bio"] = user.profile["bio"];
+			respDict["rating"] = user.rating;		
+			respDict["age"] = user.age;	
 			res.json({
 				"success": "true",
 				"msg": "User " + uname + " has successfully been retrieved.",

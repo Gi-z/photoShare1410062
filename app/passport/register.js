@@ -16,7 +16,7 @@ module.exports = function(passport) {
 		var name = req.param("name");
 		var age = req.param("age");
 		var email = req.param("email");
-		console.log(username + " " + password + " " + name + " " + age + " " + email);
+		var bio = req.param("bio");
 	
 	
 			User.findOne({ "email": email}, function(err, user) {
@@ -61,7 +61,12 @@ module.exports = function(passport) {
 	
 					//Not implemented.
 					newUser.admin = false;
-			
+
+					newUser.meta = {
+						bio: bio,
+						age: age
+					};		
+	
 					newUser.created_at = new Date();
 					newUser.last_accessed = new Date();
 					

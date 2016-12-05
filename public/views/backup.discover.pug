@@ -1,6 +1,7 @@
 html
 	head
-		title= "Home"
+		title= "Discover" 
+		
 		link(rel="stylesheet", href="https://fonts.googleapis.com/css?family=Montserrat")
 
 		link(rel="stylesheet", href="bower_components/bootstrap/dist/css/bootstrap.min.css")
@@ -12,43 +13,43 @@ html
 		link(rel="stylesheet", href="../css/base.css")
 		link(rel="stylesheet", href="../css/postFeed.css")
 		link(rel="stylesheet", href="../css/postView.css")
-
-		script(src='bower_components/angular/angular.js')
+		script(src='bower_components/angular/angular.min.js')
 		script(src="../js/angular/app.js")
 	
-		script(src="../js/services/homeFeedService.js")
-		script(src="../js/controllers/homeFeedController.js")
+		script(src="../js/services/discoverService.js")
+		script(src="../js/controllers/discoverController.js")
+		
+		script.
+			if ("#{user}")
+				var userLoggedIn = { "success": true, "user": "#{user}" };
+			else
+				var userLoggedIn = { "success": false };
 	body
 
+	div(id="test", ng-app="discoverApp", ng-controller="discoverController", ng-init="uLog = userLoggedIn")
 		
-	script.
-		if ("#{user}")
-			var userLoggedIn = { "success": true, "user": "#{user}" };
-		else
-			var userLoggedIn = { "success": false };
-
-	div(ng-app="homeApp", ng-controller="homeFeedController", ng-init="uLog = userLoggedIn")
 		script.
 			uLog = userLoggedIn;
+			console.log(uLog);
 
 		nav(class="navbar navbar-default")
 			div(class="container-fluid")
 				ul(class="nav navbar-nav")
-					li(class="active") 
-						a(href="/home") home
-					li(ng-if="userLoggedIn['success']") 
-						a(href="/profile") profile
 					li 
+						a(href="/home") home
+					li(ng-if="uLog['success']") 
+						a(href="/profile") profile
+					li(class="active") 
 						a(href="/discover") discover
-					li(ng-if="userLoggedIn['success']")
+					li(ng-if="uLog['success']")
 						a(href="/upload") upload
-					li(ng-if="!userLoggedIn['success']") 
+					li(ng-if="!uLog['success']") 
 						a(href="/login") login	
-					li(ng-if="!userLoggedIn['success']")
+					li(ng-if="!uLog['success']")
 						a(href="/register") register
 
 	
-		div(id="test", ng-repeat="post in posts", ng-if="!error")
+		div(id="postBackDiv", ng-repeat="post in posts", ng-if="!error")
 				
 			div(class="row row-margin-bottom")
 			div(class="col-md-5 no-padding lib-item" data-category="view")
@@ -70,4 +71,3 @@ html
 									p(id="caption" class="line-clamp") {{post.meta.caption}}
 									br
 				//Space for comments and stuff.
-				

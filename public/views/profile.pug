@@ -1,5 +1,6 @@
 html
 	head
+		title= viewingUser
 		link(rel="stylesheet", href="https://fonts.googleapis.com/css?family=Montserrat")
 
 		link(rel="stylesheet", href="/bower_components/bootstrap/dist/css/bootstrap.min.css")
@@ -9,53 +10,62 @@ html
 		script(src="/bower_components/bootstrap/dist/js/bootstrap.min.js")
 
 		link(rel="stylesheet", href="../css/base.css")
-		script(src='bower_components/angular/angular.min.js')
+		script(src='/bower_components/angular/angular.min.js')
 		script(src="../js/angular/app.js")
 
 		script(src="../js/services/profileService.js")
 		script(src="../js/controllers/profileController.js")
 		script.
 			var profile = "#{user}";
-			console.log(profile);
 	body
 
 	
-	script.
-		if ("#{user}")
-			var userLoggedIn = { "success": true, "user": "#{user}" };
-		else
-			var userLoggedIn = { "success": false };
-	
-	div(id="profileView", ng-app="profileApp", ng-controller="profileController", ng-init="uLog = userLoggedIn")
-
 		script.
-			uLog = userLoggedIn;
+			if ("#{user}")
+				var userLoggedIn = { "success": true, "user": "#{user}" };
+			else
+				var userLoggedIn = { "success": false };
 
+			if ("#{viewingUser}")
+				userLoggedIn["user"] = "#{viewingUser}";
 		
-		nav(class="navbar navbar-default")
-			div(class="container-fluid")
-				ul(class="nav navbar-nav")
-					li 
-						a(href="/home") home
-					li(class="active") 
-						a(href="/profile") profile
-					li 
-						a(href="/discover") discover
-					li(ng-if="userLoggedIn['success']")
-						a(href="/upload") upload
-					li(ng-if="!userLoggedIn['success']") 
-						a(href="/login") login	
-					li(ng-if="!userLoggedIn['success']")
-						a(href="/register") register
+		div(id="profileView", ng-app="profileApp", ng-controller="profileController", ng-init="uLog = userLoggedIn")
+
+			script.
+				uLog = userLoggedIn;
+				
 			
-		div(id="profileDiv")
-			h2(id="name") {{user.name}}
-			
-			h3(id="age") {{user.age}}
-			h3(id="bio") {{user.bio}}
-			
-			div(id="profileImg")
-				img(ng-src="{{user.profile_pic}}")
-			
-			div(id="uploads")
-	
+			nav(class="navbar navbar-default")
+				div(class="container-fluid")
+					ul(class="nav navbar-nav")
+						li 
+							a(href="/home") home
+						li(class="active") 
+							a(href="/profile") profile
+						li 
+							a(href="/discover") discover
+						li(ng-if="userLoggedIn['success']")
+							a(href="/upload") upload
+						li(ng-if="!userLoggedIn['success']") 
+							a(href="/login") login	
+						li(ng-if="!userLoggedIn['success']")
+							a(href="/register") register
+				
+			div(id="profileDiv")
+				h2(id="name") Name: {{user.name}}
+				h3(id="username") Username: {{user.username}}
+				h3(id="bio") Bio: {{user.bio}}
+				h3(id="rating") Rating: {{currentUserRating}}
+				
+				div(id="profileImg")
+					img(ng-src="{{user.profile_pic}}")
+				
+				div(id="ratingSlot")
+					p Your rating: 
+					select(id="ratingControl", ng-model="rateOption", ng-change="rateUser(rateOption)", ng-disabled="madeRating")
+						option(value="1") 1
+						option(value="2") 2
+						option(value="3") 3
+						option(value="4") 4
+						option(value="5") 5
+									

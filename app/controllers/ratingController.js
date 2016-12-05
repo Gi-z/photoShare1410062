@@ -12,7 +12,7 @@ exports.rateUser = function(req, res, done) {
 
 	var ratingUser = req.user;
 	var uname = req.params.username;
-	var ratingUserMade = req.param("proposedRating");
+	var ratingUserMade = req.params.rating;
 	if (uname == null) {
 		return res.json({
 			"success": "false",
@@ -53,7 +53,7 @@ exports.rateImage = function(req, res, done) {
 		});
 
 	var ratingUserRating = req.user.rating;
-	var ratingUserMade = parseFloat(req.param("proposedRating"));
+	var ratingUserMade = req.params.rating;
 	var imId = req.params.image_id;
 	
 	if (imId == null) {
@@ -88,13 +88,12 @@ exports.rateImage = function(req, res, done) {
 			});
 		}
 		else {
-			calculateAndRateImage(imageToRate, ratingUserRating, req.param("proposedRating"), res);
+			calculateAndRateImage(imageToRate, ratingUserRating, ratingUserMade, res);
 				
 			//Need to rate the user too.
 				
 			var ratingUser = req.user;
 			var uname = imageToRate.user;
-			var ratingUserMade = req.param("proposedRating");
 
 			var userToRateFunc = function(usname, cb) {
 				User.findOne({ username: usname }, function (err, user) {
@@ -200,11 +199,12 @@ function calculateAndRateImage(imageToBeRated, ratingUserRating, ratingUserMade,
 	var imageToBeCurrentRating = imageToBeRated.rating;
 	var maxRating = 5;
 
-	if (isNaN(ratingUserMade))
+	if (isNaN(ratingUserMade)) {
 		return res.json({
 			"success": "false",
 			"msg": "Rating could not be completed as the rating was not a valid number."
 		});
+	}
 
 	//Convert rating out of 5 into easily calculable numbers.
 	//5 stars is 2.5

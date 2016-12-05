@@ -1,5 +1,6 @@
 html
 	head
+		title= postTitle
 		link(rel="stylesheet", href="https://fonts.googleapis.com/css?family=Montserrat")
 
 		link(rel="stylesheet", href="/bower_components/bootstrap/dist/css/bootstrap.min.css")
@@ -9,46 +10,70 @@ html
 		script(src="/bower_components/bootstrap/dist/js/bootstrap.min.js")
 
 		link(rel="stylesheet", href="../css/base.css")
-		script(src='//ajax.googleapis.com/ajax/libs/angularjs/1.2.6/angular.min.js')
-		script(src="http://cdnjs.cloudflare.com/ajax/libs/angular-ui-router/0.2.10/angular-ui-router.js")
+		script(src='/bower_components/angular/angular.min.js')
 		script(src="../js/angular/app.js")
+	
+		script(src="/bower_components/jquery-bar-rating/jquery.barrating.js")
 
 		script(src="../js/services/postService.js")
 		script(src="../js/controllers/postController.js")
 		script.
 			var poster = "#{post_id}";
-			console.log("memes!");
-			console.log(poster);
+			
+			if ("#{user}")
+				var userLoggedIn = { "success": true, "user": "#{user}" };
+			else
+				var userLoggedIn = { "success": false };
 	body
-
-	nav(class="navbar navbar-default")
-		div(class="container-fluid")
-			ul(class="nav navbar-nav")
-				li 
-					a(href="/home") home
-				li 
-					a(href="/profile") profile
-				li 
-					a(href="/discover") discover
-				li
-					a(href="/upload") upload
-				li 
-					a(href="/login") login	
-
-	div(id="test", ng-app="postApp", ng-controller="postController", ng-init="post_id = poster")
-		script.
-			post_id = poster;
 				
-		div(id="postDiv")
-			h2(id="title") {{post.title}}
-			
-			h3(id="username") by {{post.user}}
-			
-			div(id="postImg")
-				img(ng-src="{{post.url}}")
-			
-				p(id="caption") {{post.caption}}
-			
-			div(id="postInfo")
+		div(id="test", ng-app="postApp", ng-controller="postController", ng-init="uLog = userLoggedIn; post_id = poster")
+			script.
+				uLog = userLoggedIn;
+				post_id = poster;
+
+			nav(class="navbar navbar-default")
+				div(class="container-fluid")
+					ul(class="nav navbar-nav")
+						li(class="active") 
+							a(href="/home") home
+						li(ng-if="userLoggedIn['success']") 
+							a(href="/profile") profile
+						li 
+							a(href="/discover") discover
+						li(ng-if="userLoggedIn['success']")
+							a(href="/upload") upload
+						li(ng-if="!userLoggedIn['success']") 
+							a(href="/login") login	
+						li(ng-if="!userLoggedIn['success']")
+							a(href="/register") register
+
+			div(id="postDiv")
+				div(id="title")
+					h2(id="title") {{post.title}}
+				div(id="user_name")
+					h3(id="username") by 
+						a(href="/profile/{{post.user}}") {{post.user}}
+				div(id="rating")
+					h3(id="rating") Rating: {{postCurrentRating}}		
+		
+				div(id="postImg")
+					a(href="{{post.url}}")
+						img(class="resize", ng-src="{{post.url}}")
+				
+				div(id="imgCaption")
+					p(id="caption") Caption: {{post.meta.caption}}
+				
+				div(id="postInfo")
+					div(id="exifSpot")
+						p(id="exifHighlights")			
 	
-				//EXIF INFO PLACE
+					div(id="ratingSlot")
+						p Your rating: 
+						select(id="ratingControl", ng-model="rateOption", ng-change="rateImage(rateOption)", ng-disabled="madeRating")
+							option(value="1") 1
+							option(value="2") 2
+							option(value="3") 3
+							option(value="4") 4
+							option(value="5") 5
+										
+					//EXIF INFO PLACE

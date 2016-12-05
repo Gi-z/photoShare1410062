@@ -8,10 +8,6 @@ const postController = require("../controllers/postController.js");
 const pageController = require("../controllers/pageController.js");
 const ratingController = require("../controllers/ratingController.js");
 
-router.use("/*", function(req, res, next) {
-	next();
-});
-
 router.get('/', pageController.home);
 
 router.get("/home", pageController.home);
@@ -21,6 +17,7 @@ router.get("/upload", pageController.upload);
 router.get("/post/", postController.emptyPost);
 router.get("/post/:post_id", postController.loadPost);
 router.get("/profile", pageController.profile);
+router.get("/profile/:username", pageController.publicProfile);
 router.get("/discover", pageController.discover);
 //API Routes
 
@@ -30,7 +27,7 @@ router.get("/api/post/:post_id", apiController.getPost);
 router.get("/api/image/:post_id", apiController.image);
 router.get("/api/profile/:username", apiController.profile);
 
-router.post("/api/profile/:username/rate", ratingController.rateUser);
+router.post("/api/profile/:username/rate/:rating", ratingController.rateUser);
 
 router.post('/api/register', function (req, res, next) {
 	passport.authenticate('register', function(err, user, info) {
@@ -89,6 +86,6 @@ router.post("/api/comment", apiController.newComment);
 var uploading = multer({ storage: multer.memoryStorage() });                                                                                                                         var type = uploading.single("file");
 router.post("/api/upload_image", type, apiController.upload);
 router.post("/api/post/edit/:image_id", apiController.editImage);
-router.post("/api/post/:image_id/rate", ratingController.rateImage);
+router.post("/api/post/:image_id/rate/:rating", ratingController.rateImage);
 
 app.use('/', router);

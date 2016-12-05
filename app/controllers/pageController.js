@@ -33,6 +33,13 @@ exports.profile = function(req, res, done) {
 		res.redirect("/home")
 }
 
+exports.publicProfile = function(req, res, done) {
+	if (req.user)
+		res.render("profile", { viewingUser: req.param("username"), user: req.user.username });
+	else
+		res.render("profile", { viewingUser: req.param("username") });
+}
+
 exports.discover = function(req, res, done) {
 	if (req.user)
 		res.render("discover", {user: req.user.username});

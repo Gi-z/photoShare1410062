@@ -1,6 +1,6 @@
 html
 	head
-		title= title
+		title= "Upload"
 		
 		link(rel="stylesheet", href="https://fonts.googleapis.com/css?family=Montserrat")
 
@@ -44,15 +44,28 @@ html
 
 		div(id="test")
 			form(id="upload_form", enctype="multipart/form-data")
-				div(class="form-group form-group-sm")
-					span.label Title
-					input(type="text", class="form-control", name="name", data-validation="length", data-validation-length="max50")
+				div(class="control-group")
+					label(class="control-label") Title
+					div(class="controls")
+						input(type="text", class="input-xlarge", name="name", data-validation="length", data-validation-length="max50")
+	
 
-				div(class="form-group form-group-sm")
-					span.label Image
-					input(type="file", class="form-control", name="file", accept="image/*")
-				div(class="form-group form-group-sm")
-					input(text='Upload', id="upload", type="submit", ng-click="submitForm()", class="btn btn-default")
+				div(class="control-group")
+					label(class="control-label") Caption 
+					div(class="controls")
+						input(type="text", class="input-xlarge", name="caption", data-validation="length", data-validation-length="max500")
+
+				div(class="control-group")
+					label(class="control-label") Location
+					div(class="controls")
+						input(type="text", class="input-xlarge", name="location", data-validation="length", data-validation-length="max50")
+					label(class="control-label") Image
+					div(class="controls")
+						input(type="file", name="file", accept="image/*")
+	
+				div(class="control-group")
+					div(class="controls")
+						input(text='Upload', id="upload", type="submit", ng-click="submitForm()", class="btn btn-default", ng-disabled="isSubmitting")
 
 				div(class="alert alert-success", ng-if="successfulUpload")
 					strong Success!
