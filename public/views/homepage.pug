@@ -18,24 +18,35 @@ html
 	
 		script(src="../js/services/homeFeedService.js")
 		script(src="../js/controllers/homeFeedController.js")
-
 	body
 
-	nav(class="navbar navbar-default")
-		div(class="container-fluid")
-			ul(class="nav navbar-nav")
-				li(class="active") 
-					a(href="/home") home
-				li 
-					a(href="/profile") profile
-				li 
-					a(href="/discover") discover
-				li
-					a(href="/upload") upload
-				li 
-					a(href="/login") login	
+		
+	script.
+		if ("#{user}")
+			var userLoggedIn = { "success": true, "user": "#{user}" };
+		else
+			var userLoggedIn = { "success": false };
 
-	div(id="test", ng-app="homeApp", ng-controller="homeFeedController")
+	div(id="test", ng-app="homeApp", ng-controller="homeFeedController", ng-init="uLog = userLoggedIn")
+		script.
+			uLog = userLoggedIn;
+
+		nav(class="navbar navbar-default")
+			div(class="container-fluid")
+				ul(class="nav navbar-nav")
+					li(class="active") 
+						a(href="/home") home
+					li(ng-if="userLoggedIn['success']") 
+						a(href="/profile") profile
+					li 
+						a(href="/discover") discover
+					li(ng-if="userLoggedIn['success']")
+						a(href="/upload") upload
+					li(ng-if="!userLoggedIn['success']") 
+						a(href="/login") login	
+					li(ng-if="!userLoggedIn['success']")
+						a(href="/register") register
+
 	
 		div(id="postBackDiv", ng-repeat="post in posts", ng-if="!error")
 				

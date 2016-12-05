@@ -18,19 +18,33 @@ html
 		script(src="../js/controllers/loginFormController.js")
 	body
 
-	nav(class="navbar navbar-default")
-		div(class="container-fluid")
-			ul(class="nav navbar-nav")
-				li(class="active") 
-					a(href="/home") home
-				li 
-					a(href="/profile") profile
-				li 
-					a(href="/discover") discover
-				li
-					a(href="/upload") upload	
-
+	script.
+		if ("#{user}")
+			var userLoggedIn = { "success": true, "user": "#{user}" };
+		else
+			var userLoggedIn = { "success": false };
+	
 	div(id="loginForm", ng-app="loginApp", ng-controller="formController")
+
+		script.
+			uLog = userLoggedIn;
+
+		nav(class="navbar navbar-default")
+			div(class="container-fluid")
+				ul(class="nav navbar-nav")
+					li 
+						a(href="/home") home
+					li(ng-if="userLoggedIn['success']") 
+						a(href="/profile") profile
+					li 
+						a(href="/discover") discover
+					li(ng-if="userLoggedIn['success']")
+						a(href="/upload") upload
+					li(class="active") 
+						a(href="/login") login	
+					li(ng-if="!userLoggedIn['success']")
+						a(href="/register") register
+
 		div(id="test")
 			form(id="login_form")
 				div(class="form-group form-group-sm")
